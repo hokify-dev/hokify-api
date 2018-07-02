@@ -1,0 +1,2734 @@
+{
+  "info": {
+    "description": "Hokify API Interface documentation",
+    "version": "1.0.0",
+    "title": "Hokify",
+    "contact": {
+      "name": "API Support",
+      "email": "api@hokify.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "User Authentication"
+    },
+    {
+      "name": "misc",
+      "description": "Miscellaneous Operations"
+    },
+    {
+      "name": "job",
+      "description": "Job related Operations"
+    },
+    {
+      "name": "conversation",
+      "description": "Conversation Operations"
+    },
+    {
+      "name": "match",
+      "description": "Job Match Operations"
+    },
+    {
+      "name": "application",
+      "description": "Job Applications Operations"
+    }
+  ],
+  "paths": {
+    "/api-login": {
+      "post": {
+        "summary": "get session token for mandator",
+        "tags": [
+          "auth"
+        ],
+        "operationId": "login",
+        "responses": {
+          "200": {
+            "description": "Api Session Token",
+            "schema": {
+              "$ref": "#/definitions/APILoginResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "User Object",
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/APILoginRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/get-documenttypes-extern": {
+      "get": {
+        "summary": "Gets the available document types",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "getDocumenttypes",
+        "responses": {
+          "200": {
+            "description": "Document Types",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DocumentTypeElement"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/job-extern": {
+      "get": {
+        "summary": "retrieves a job",
+        "tags": [
+          "job"
+        ],
+        "operationId": "getJob",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "nr",
+            "description": "jobNr of the job",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "description": "id of the job",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job",
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-lp-extern": {
+      "get": {
+        "summary": "Gets LandingPages by its id",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "getLandingpage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Landingpage"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-company-extern": {
+      "get": {
+        "summary": "finds company by its id",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "getCompany",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/resolve-type-extern": {
+      "get": {
+        "summary": "resolves a job type by its id",
+        "tags": [
+          "job"
+        ],
+        "operationId": "resolveJobType",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Jobtype"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-keyword-extern": {
+      "get": {
+        "summary": "resolves a keyword by its name",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "getKeyword",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Keywords"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/resolve-keyword-extern": {
+      "get": {
+        "summary": "resolves a keyword by its name",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "resolveKeyword",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResolveKeywordElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/resolve-location-extern": {
+      "get": {
+        "summary": "resolves a location by its address",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "resolveLocation",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ResolveLocationResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/resolve-geo-extern": {
+      "get": {
+        "summary": "resolves a geocoding by coordinates",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "resolveGeo",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ResolveGeo"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-jobs-extern": {
+      "get": {
+        "summary": "gets all jobs for the mandator user",
+        "tags": [
+          "job"
+        ],
+        "operationId": "getJobs",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GetJobsResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/disable-job-extern": {
+      "post": {
+        "summary": "disables an job",
+        "tags": [
+          "job"
+        ],
+        "operationId": "disableJob",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorCodeResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "job identifier",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jobCode": {
+                  "type": "string"
+                },
+                "sourceId": {
+                  "type": "string"
+                },
+                "jobId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/get-conversations-extern": {
+      "get": {
+        "summary": "gets conversations for a mandator user",
+        "tags": [
+          "conversation"
+        ],
+        "operationId": "getConversations",
+        "parameters": [
+          {
+            "in": "query",
+            "required": false,
+            "name": "startTime",
+            "description": "date in utc format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "endTime",
+            "description": "date in utc format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "csv",
+            "description": "true for csv format, empty for json",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ConversationsResponseElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorCodeResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-all-applications-extern": {
+      "get": {
+        "summary": "gets applcations for a mandator user",
+        "tags": [
+          "application"
+        ],
+        "operationId": "getAllApplications",
+        "parameters": [
+          {
+            "in": "query",
+            "required": false,
+            "name": "startTime",
+            "description": "date in utc format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "endTime",
+            "description": "date in utc format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "csv",
+            "description": "true for csv format, empty for json",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AllApplicantsResponseElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-fields-extern": {
+      "get": {
+        "summary": "returns all available job fields",
+        "tags": [
+          "job"
+        ],
+        "operationId": "getFields",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FieldsResponseElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/get-question-list-extern": {
+      "get": {
+        "summary": "returns all available questions",
+        "tags": [
+          "job"
+        ],
+        "operationId": "getQuestionList",
+        "parameters": [
+          {
+            "in": "query",
+            "required": false,
+            "name": "csv",
+            "description": "true for csv format, empty for json",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/QuestionsResponseElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-match-file-extern": {
+      "get": {
+        "summary": "returns a file from a match",
+        "tags": [
+          "match"
+        ],
+        "operationId": "getMatchFile",
+        "parameters": [
+          {
+            "in": "query",
+            "required": true,
+            "name": "match",
+            "description": "id for the match",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": true,
+            "name": "file",
+            "description": "name of the file",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "type",
+            "description": "type of the file",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "file result"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "404": {
+            "description": "file not found"
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/add-job-extern": {
+      "post": {
+        "summary": "Creates a new Job",
+        "tags": [
+          "job"
+        ],
+        "operationId": "addJob",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AddJobResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Job object",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Job Titel"
+                },
+                "wage": {
+                  "type": "string",
+                  "description": "Wage"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "55d74e5d365315e629446d54",
+                    "55d74e7d365315e629446d55",
+                    "55d74f6c365315e629446d56",
+                    "55d74f96365315e629446d58",
+                    "56a90202c0b1e4ea4ede1a58",
+                    "56b352dcb5c5f2a71436dc51"
+                  ]
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "questions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "company": {
+                  "type": "string"
+                },
+                "contactPhone": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "addressText": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "isPublished": {
+                  "type": "boolean"
+                },
+                "sourceId": {
+                  "type": "string"
+                },
+                "descriptionHTML": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "employmenttype": {
+                  "type": "string",
+                  "enum": [
+                    "570ff1bf056b57087012f9f8",
+                    "570ff242056b57087012f9fb",
+                    "570ff247056b57087012f9fc",
+                    "570ff24d056b57087012f9fd"
+                  ]
+                },
+                "requriedFields": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/lookup-place": {
+      "get": {
+        "summary": "looks up a place near a location",
+        "tags": [
+          "misc"
+        ],
+        "operationId": "lookupPlace",
+        "parameters": [
+          {
+            "in": "query",
+            "required": true,
+            "name": "address",
+            "description": "address from where to search",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "name the place near the address",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/LookupPlaceResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/job-suggestions-extern": {
+      "get": {
+        "summary": "list of job suggestions",
+        "tags": [
+          "job"
+        ],
+        "operationId": "jobSuggestions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fields",
+            "description": "address from where to search",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "types",
+            "description": "job type",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "max number of results",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "description": "location to seach nearby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "multiLocations",
+            "description": "allows to use multiple locations",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "skip first n results",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxDistance",
+            "description": "maximum distance from location",
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "keyword",
+            "description": "keywords or something",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "filters",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/JobSuggestionsResponseElement"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    },
+    "/get-branch-by-id-extern": {
+      "get": {
+        "summary": "return a job field for an id",
+        "tags": [
+          "job"
+        ],
+        "operationId": "getBranchById",
+        "parameters": [
+          {
+            "in": "query",
+            "required": true,
+            "name": "id",
+            "description": "id of the job field",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/BranchResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/SuccessMsg"
+            }
+          }
+        },
+        "security": [
+          {
+            "hokify_session_token": []
+          }
+        ]
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Hokify Api Documentation",
+    "url": "https://devwiki.hokify.com/hokify-api"
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "host": "hokify.com",
+  "basePath": "/api",
+  "securityDefinitions": {
+    "hokify_session_token": {
+      "type": "apiKey",
+      "name": "x-session-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Info": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "info"
+    },
+    "APILoginResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "info": {
+          "$ref": "#/definitions/Info"
+        },
+        "sessionToken": {
+          "type": "string"
+        }
+      },
+      "title": "apiLoginResponse"
+    },
+    "APILoginRequest": {
+      "type": "object",
+      "properties": {
+        "mandator": {
+          "type": "string",
+          "description": "mandator id"
+        },
+        "token": {
+          "type": "string",
+          "description": "api token"
+        }
+      }
+    },
+    "DocumentTypeElement": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "DocumentType"
+    },
+    "SuccessMsg": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "R": {
+      "type": "object",
+      "properties": {
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "r"
+    },
+    "DescriptionBlock": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string"
+        },
+        "block1": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        }
+      },
+      "title": "descriptionBlock"
+    },
+    "ExtractedKeyword": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string"
+        },
+        "score": {
+          "type": "integer"
+        },
+        "_id": {
+          "type": "string"
+        }
+      },
+      "title": "extractedKeyword"
+    },
+    "Images": {
+      "type": "object",
+      "properties": {
+        "thumbnail": {
+          "type": "string"
+        },
+        "small": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "large": {
+          "type": "string"
+        },
+        "xlarge": {
+          "type": "string"
+        }
+      },
+      "title": "images"
+    },
+    "Field": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "field"
+    },
+    "Logos": {
+      "type": "object",
+      "properties": {
+        "thumbnail": {
+          "type": "string"
+        },
+        "small": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "large": {
+          "type": "string"
+        },
+        "xlarge": {
+          "type": "string"
+        }
+      },
+      "title": "logos"
+    },
+    "JobCompany": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logos": {
+          "$ref": "#/definitions/Logos"
+        }
+      },
+      "title": "company"
+    },
+    "Internal": {
+      "type": "object",
+      "properties": {
+        "isPublished": {
+          "type": "boolean"
+        },
+        "publishedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "title": "internal"
+    },
+    "Job": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "jobNr": {
+          "type": "integer"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "wage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "r": {
+          "$ref": "#/definitions/R"
+        },
+        "rounds": {
+          "type": "array",
+          "items": {}
+        },
+        "specificFields": {
+          "type": "array",
+          "items": {}
+        },
+        "timeFrame": {
+          "type": "array",
+          "items": {}
+        },
+        "_tags": {
+          "type": "array",
+          "items": {}
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/RequiredField"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "requiredField"
+          }
+        },
+        "yourTask": {
+          "type": "array",
+          "items": {}
+        },
+        "weOffer": {
+          "type": "array",
+          "items": {}
+        },
+        "weWant": {
+          "type": "array",
+          "items": {}
+        },
+        "travelNeeded": {
+          "type": "boolean"
+        },
+        "remoteWork": {
+          "type": "boolean"
+        },
+        "descriptionBlocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DescriptionBlock"
+          }
+        },
+        "defaultLanguage": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "extractedKeywords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExtractedKeyword"
+          }
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "webUrl": {
+          "type": "string"
+        },
+        "images": {
+          "$ref": "#/definitions/Images"
+        },
+        "type": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Field"
+          }
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "company": {
+          "$ref": "#/definitions/JobCompany"
+        },
+        "internal": {
+          "$ref": "#/definitions/Internal"
+        },
+        "owners": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "Job"
+    },
+    "PossibleFilter": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "possibleFilt"
+    },
+    "LandingPageResults": {
+      "type": "object",
+      "properties": {
+        "_allTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "jobNrs": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "count": {
+          "type": "integer"
+        },
+        "avgScore": {
+          "type": "number"
+        },
+        "maxScore": {
+          "type": "number"
+        },
+        "minWage": {
+          "type": "integer"
+        },
+        "maxWage": {
+          "type": "integer"
+        },
+        "possibleFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PossibleFilter"
+          }
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "filterUpdatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "results"
+    },
+    "Branch": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "branch"
+    },
+    "LandingPageLocation": {
+      "type": "object",
+      "properties": {
+        "geo": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "location"
+    },
+    "Landingpage": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pageType": {
+          "type": "string"
+        },
+        "geoRegion": {
+          "type": "string"
+        },
+        "useIndex": {
+          "type": "boolean"
+        },
+        "url": {
+          "type": "string"
+        },
+        "lpVersion": {
+          "type": "integer"
+        },
+        "results": {
+          "$ref": "#/definitions/LandingPageResults"
+        },
+        "neededCount": {
+          "type": "integer"
+        },
+        "usedCount": {
+          "type": "integer"
+        },
+        "branch": {
+          "$ref": "#/definitions/Branch"
+        },
+        "location": {
+          "$ref": "#/definitions/LandingPageLocation"
+        },
+        "canonicalUrl": {
+          "type": "string"
+        },
+        "hasResults": {
+          "type": "boolean"
+        },
+        "lastCanonicalResult": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "lastMod": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isCanonical": {
+          "type": "boolean"
+        },
+        "filters": {
+          "type": "array",
+          "items": {}
+        },
+        "firstTimeCanonical": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "canonicalResult": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "lastLPIrunResult": {
+          "type": "string"
+        },
+        "lastLPITouch": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "Landingpage"
+    },
+    "CompanyInternal": {
+      "type": "object",
+      "properties": {
+        "availableRegions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "availableRegionsWithJobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "publishToSEOIndex": {
+          "type": "array",
+          "items": {}
+        },
+        "sendSummaryAt": {
+          "type": "string"
+        },
+        "sendSummaryEvery": {
+          "type": "string"
+        }
+      },
+      "title": "company-internal"
+    },
+    "Company": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "internal": {
+          "$ref": "#/definitions/CompanyInternal"
+        },
+        "rejectionText": {
+          "type": "array",
+          "items": {}
+        },
+        "trustedUsers": {
+          "type": "array",
+          "items": {}
+        },
+        "dbV": {
+          "type": "integer"
+        }
+      },
+      "title": "Company"
+    },
+    "KeywordInfo": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "info"
+    },
+    "Keywords": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/KeywordInfo"
+        }
+      },
+      "title": "Keywords"
+    },
+    "ResolveKeywordElement": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        }
+      },
+      "title": "ResolveKeyword"
+    },
+    "AdministrativeLevels": {
+      "type": "object",
+      "properties": {
+        "level1long": {
+          "type": "string"
+        },
+        "level1short": {
+          "type": "string"
+        }
+      },
+      "title": "administrativeLevels"
+    },
+    "ResolveLocationResponse": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "street": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "administrativeLevels": {
+          "$ref": "#/definitions/AdministrativeLevels"
+        },
+        "city": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "streetNumber": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer"
+        }
+      },
+      "title": "ResolveLocationResponse"
+    },
+    "GeoLocation": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "street": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "district": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      },
+      "title": "GeoLocation"
+    },
+    "ResolveGeo": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "location": {
+          "$ref": "#/definitions/GeoLocation"
+        }
+      },
+      "title": "ResolveGeo"
+    },
+    "RequiredField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "questiontype": {
+          "type": "string"
+        },
+        "answerMinLength": {
+          "type": "integer"
+        },
+        "answerMaxLength": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "title": "requiredField"
+    },
+    "GetJob": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "jobNr": {
+          "type": "integer"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "_type": {
+          "type": "string"
+        },
+        "wage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "r": {
+          "$ref": "#/definitions/R"
+        },
+        "rounds": {
+          "type": "array",
+          "items": {}
+        },
+        "specificFields": {
+          "type": "array",
+          "items": {}
+        },
+        "timeFrame": {
+          "type": "array",
+          "items": {}
+        },
+        "_tags": {
+          "type": "array",
+          "items": {}
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/RequiredField"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "requiredField"
+          }
+        },
+        "yourTask": {
+          "type": "array",
+          "items": {}
+        },
+        "weOffer": {
+          "type": "array",
+          "items": {}
+        },
+        "weWant": {
+          "type": "array",
+          "items": {}
+        },
+        "travelNeeded": {
+          "type": "boolean"
+        },
+        "remoteWork": {
+          "type": "boolean"
+        },
+        "descriptionBlocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DescriptionBlock"
+          }
+        },
+        "defaultLanguage": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "extractedKeywords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExtractedKeyword"
+          }
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "webUrl": {
+          "type": "string"
+        },
+        "images": {
+          "$ref": "#/definitions/Logos"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "company": {
+          "$ref": "#/definitions/JobCompany"
+        },
+        "internal": {
+          "$ref": "#/definitions/Internal"
+        },
+        "owners": {
+          "type": "array",
+          "items": {}
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "addressText": {
+          "type": "string"
+        },
+        "_oldOwner": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "job"
+    },
+    "GetJobsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetJob"
+          }
+        }
+      },
+      "title": "GetJobsResponse"
+    },
+    "ErrorCodeResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string"
+        },
+        "msg": {
+          "type": "string"
+        }
+      },
+      "title": "ErrorCodeResponse"
+    },
+    "AdditionalFile": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "downloadUrl": {
+          "type": "string"
+        }
+      },
+      "title": "additionalFile"
+    },
+    "AllApplicantsResponseElement": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string"
+        },
+        "jobSourceId": {
+          "type": "string"
+        },
+        "matchId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "hokifyMail": {
+          "type": "string"
+        },
+        "fileProfile": {
+          "type": "string"
+        },
+        "fileCV": {
+          "type": "string"
+        },
+        "additionalFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdditionalFile"
+          }
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "applicationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gender": {
+          "type": "string"
+        }
+      },
+      "title": "AllApplicantsResponse"
+    },
+    "FieldsResponseElement": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldsResponseElement"
+          }
+        }
+      },
+      "title": "FieldsResponseElement"
+    },
+    "Jobtype": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "de": {
+          "type": "string"
+        }
+      },
+      "title": "Jobtype"
+    },
+    "QuestionsResponseElement": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "de_short": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "de": {
+          "type": "string"
+        },
+        "_jobtype": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Jobtype"
+          }
+        }
+      },
+      "title": "QuestionsResponse"
+    },
+    "Views": {
+      "type": "object",
+      "properties": {
+        "web": {
+          "type": "integer"
+        },
+        "app": {
+          "type": "integer"
+        },
+        "external": {
+          "type": "integer"
+        }
+      }
+    },
+    "Stats": {
+      "type": "object",
+      "properties": {
+        "discarded": {
+          "type": "integer"
+        },
+        "saved": {
+          "type": "integer"
+        },
+        "applied": {
+          "type": "integer"
+        },
+        "appliedLast30Days": {
+          "type": "integer"
+        },
+        "smslink": {
+          "type": "integer"
+        },
+        "views": {
+          "$ref": "#/definitions/Views"
+        }
+      },
+      "title": "stats"
+    },
+    "AddJobInternal": {
+      "type": "object",
+      "properties": {
+        "adsCreated": {
+          "type": "boolean"
+        },
+        "manualPrioMode": {
+          "type": "boolean"
+        },
+        "costs": {
+          "type": "integer"
+        },
+        "region": {
+          "type": "string"
+        },
+        "location": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "source": {
+          "type": "integer"
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "isPrepared": {
+          "type": "boolean"
+        },
+        "isPending": {
+          "type": "boolean"
+        },
+        "isService": {
+          "type": "boolean"
+        },
+        "offline": {
+          "type": "boolean"
+        },
+        "stats": {
+          "$ref": "#/definitions/Stats"
+        },
+        "_packages": {
+          "type": "array",
+          "items": {}
+        },
+        "autoExtend": {
+          "type": "boolean"
+        },
+        "notifiedLowRuntime": {
+          "type": "boolean"
+        },
+        "jobCode": {
+          "type": "string"
+        }
+      },
+      "title": "internal"
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "title": "question"
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "streetNumber": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      },
+      "title": "location"
+    },
+    "AddJobCompany": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "company"
+    },
+    "AddJob": {
+      "type": "object",
+      "properties": {
+        "internal": {
+          "$ref": "#/definitions/AddJobInternal"
+        },
+        "defaultLanguage": {
+          "type": "string"
+        },
+        "descriptionBlocks": {
+          "type": "array",
+          "items": {}
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/RequiredField"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "requiredField"
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_tags": {
+          "type": "array",
+          "items": {}
+        },
+        "_oldOwner": {
+          "type": "array",
+          "items": {}
+        },
+        "_id": {
+          "type": "string"
+        },
+        "wage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "jobNr": {
+          "type": "integer"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "openRecruiterTodos": {
+          "type": "integer"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Question"
+          }
+        },
+        "type": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Field"
+          }
+        },
+        "webUrl": {
+          "type": "string"
+        },
+        "images": {
+          "$ref": "#/definitions/Images"
+        },
+        "statsDownloadCode": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "company": {
+          "$ref": "#/definitions/AddJobCompany"
+        },
+        "owners": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "job"
+    },
+    "AddJobResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "job": {
+          "$ref": "#/definitions/AddJob"
+        },
+        "modified": {
+          "type": "boolean"
+        },
+        "created": {
+          "type": "boolean"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "AddJobResponse"
+    },
+    "AddressComponent": {
+      "type": "object",
+      "properties": {
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "address_component"
+    },
+    "LookupPlaceLocation": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        }
+      },
+      "title": "location"
+    },
+    "Viewport": {
+      "type": "object",
+      "properties": {
+        "northeast": {
+          "$ref": "#/definitions/LookupPlaceLocation"
+        },
+        "southwest": {
+          "$ref": "#/definitions/LookupPlaceLocation"
+        }
+      },
+      "title": "viewport"
+    },
+    "Geometry": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "$ref": "#/definitions/LookupPlaceLocation"
+        },
+        "viewport": {
+          "$ref": "#/definitions/Viewport"
+        }
+      },
+      "title": "geometry"
+    },
+    "Close": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer"
+        },
+        "time": {
+          "type": "string"
+        }
+      },
+      "title": "close"
+    },
+    "Period": {
+      "type": "object",
+      "properties": {
+        "close": {
+          "$ref": "#/definitions/Close"
+        },
+        "open": {
+          "$ref": "#/definitions/Close"
+        }
+      },
+      "title": "period"
+    },
+    "OpeningHours": {
+      "type": "object",
+      "properties": {
+        "open_now": {
+          "type": "boolean"
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Period"
+          }
+        },
+        "weekday_text": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "opening_hours"
+    },
+    "Photo": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "integer"
+        },
+        "html_attributions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "photo_reference": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer"
+        }
+      },
+      "title": "photo"
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "author_name": {
+          "type": "string"
+        },
+        "author_url": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "profile_photo_url": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "relative_time_description": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "time": {
+          "type": "integer"
+        }
+      },
+      "title": "review"
+    },
+    "LookupPlaceResult": {
+      "type": "object",
+      "properties": {
+        "address_components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressComponent"
+          }
+        },
+        "adr_address": {
+          "type": "string"
+        },
+        "formatted_address": {
+          "type": "string"
+        },
+        "formatted_phone_number": {
+          "type": "string"
+        },
+        "geometry": {
+          "$ref": "#/definitions/Geometry"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "international_phone_number": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "opening_hours": {
+          "$ref": "#/definitions/OpeningHours"
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Photo"
+          }
+        },
+        "place_id": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          }
+        },
+        "scope": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "utc_offset": {
+          "type": "integer"
+        },
+        "vicinity": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        }
+      },
+      "title": "LookupPlaceResult"
+    },
+    "LookupPlaceResponse": {
+      "type": "object",
+      "properties": {
+        "html_attributions": {
+          "type": "array",
+          "items": {}
+        },
+        "result": {
+          "$ref": "#/definitions/LookupPlaceResult"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "LookupPlaceResponse"
+    },
+    "BranchResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "keyword": {
+          "type": "string"
+        }
+      },
+      "title": "BranchResponse"
+    },
+    "ConversationsResponseElement": {
+      "type": "object",
+      "properties": {
+        "msgId": {
+          "type": "string"
+        },
+        "jobId": {
+          "type": "string"
+        },
+        "sender": {
+          "type": "string"
+        },
+        "matchId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "hokifyMail": {
+          "type": "string"
+        },
+        "jobName": {
+          "type": "string"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "msgTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "msg": {
+          "type": "string"
+        }
+      },
+      "title": "ConversationsResponse"
+    },
+    "JobSuggestionsResponseElement": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "jobNr": {
+          "type": "integer"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "wage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "r": {
+          "$ref": "#/definitions/R"
+        },
+        "_oldOwner": {
+          "type": "array",
+          "items": {}
+        },
+        "_tags": {
+          "type": "array",
+          "items": {}
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/RequiredField"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "requiredField"
+          }
+        },
+        "descriptionBlocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DescriptionBlock"
+          }
+        },
+        "defaultLanguage": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer"
+        },
+        "webUrl": {
+          "type": "string"
+        },
+        "images": {
+          "$ref": "#/definitions/Images"
+        },
+        "type": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "company": {
+          "$ref": "#/definitions/JobCompany"
+        },
+        "internal": {
+          "$ref": "#/definitions/Internal"
+        },
+        "owners": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "title": "JobSuggestionsResponse"
+    }
+  }
+}
