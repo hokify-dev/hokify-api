@@ -1,56 +1,31 @@
 const Swagger = require('swagger-client');
 const spec = require('../swagger.json');
 
-const request = require('request');
-const fs = require('fs');
-
-
 (async () => {
-    spec.host = 'test.hokify.com'; // use test environment
+  const client = await new Swagger({
+    spec,
+    usePromise: true
+  });
 
-    const client = await new Swagger({
-        spec,
-        usePromise: true
-    });
+  client.clientAuthorizations.add(
+    'JOB_API_BASIC',
+    new Swagger.PasswordAuthorization('<MANDATOR_ID>', '<MANDATOR_TOKEN>')
+  );
 
-    const loginResponse = await client.auth.login({
-            body: {
-                mandator: '<YOUR-ID>',
-                token: '<YOUR-TOKEN>'
-            }
-        }
-    );
-    console.log('loginResponse', loginResponse.obj);
+  const loginResponse = await client.authentication.Token();
+  console.log('loginResponse', loginResponse.obj);
 
-    client.clientAuthorizations.add('hokify_session_token',
-        new Swagger.ApiKeyAuthorization(
-            'x-session-token',
-            loginResponse.obj.sessionToken,
-            'header'
-        )
-    );
+  client.clientAuthorizations.add(
+    'JOB_API_BEARER',
+    new Swagger.ApiKeyAuthorization(
+      'Authorization',
+      'Bearer ' + loginResponse.obj.access_token,
+      'header'
+    )
+  );
 
-    let appliations = await client.application.getAllApplications();
+  const applications = await client.application.GetApplications();
 
-    console.log('applications', appliations.obj);
-
-    let application = appliations.obj[0];
-
-
-    request.get('https://test.hokify.com/api/get-match-file-extern', {
-        headers: {
-            'x-session-token': loginResponse.obj.sessionToken
-        },
-        qs: {
-            match: application.matchId,
-            file: 'profile'
-        }
-    })
-        .on('response', (response) => {
-            response.pipe(fs.createWriteStream('../matchfiles/' + response.headers.filename));
-        });
-
-})()
-    .catch((err) => console.log('something went wrong', err));
-
-
+  const latestApplication = applications.obj.pop();
+  console.log('latestApplication', JSON.stringify(latestApplication, null, 3));
+})().catch(err => console.log('something went wrong', err));

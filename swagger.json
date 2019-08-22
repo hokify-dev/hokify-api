@@ -1,2658 +1,939 @@
 {
-  "info": {
-    "description": "Hokify API Interface documentation",
-    "version": "1.0.0",
-    "title": "Hokify",
-    "contact": {
-      "name": "API Support",
-      "email": "api@hokify.com"
-    }
-  },
-  "tags": [
-    {
-      "name": "auth",
-      "description": "User Authentication"
-    },
-    {
-      "name": "misc",
-      "description": "Miscellaneous Operations"
-    },
-    {
-      "name": "job",
-      "description": "Job related Operations"
-    },
-    {
-      "name": "conversation",
-      "description": "Conversation Operations"
-    },
-    {
-      "name": "match",
-      "description": "Job Match Operations"
-    },
-    {
-      "name": "application",
-      "description": "Job Applications Operations"
-    }
+  "basePath": "/ats-api/v1",
+  "consumes": [
+    "application/json"
   ],
-  "paths": {
-    "/api-login": {
-      "post": {
-        "summary": "get session token for mandator",
-        "tags": [
-          "auth"
-        ],
-        "operationId": "login",
-        "responses": {
-          "200": {
-            "description": "Api Session Token",
-            "schema": {
-              "$ref": "#/definitions/APILoginResponse"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "description": "User Object",
-            "required": true,
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/APILoginRequest"
-            }
-          }
-        ]
-      }
-    },
-    "/get-documenttypes-extern": {
-      "get": {
-        "summary": "Gets the available document types",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "getDocumenttypes",
-        "responses": {
-          "200": {
-            "description": "Document Types",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/DocumentTypeElement"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ],
-        "parameters": []
-      }
-    },
-    "/job-extern": {
-      "get": {
-        "summary": "retrieves a job",
-        "tags": [
-          "job"
-        ],
-        "operationId": "getJob",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "nr",
-            "description": "jobNr of the job",
-            "type": "integer"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "description": "id of the job",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Job",
-            "schema": {
-              "$ref": "#/definitions/Job"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-lp-extern": {
-      "get": {
-        "summary": "Gets LandingPages by its id",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "getLandingpage",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Landingpage"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-company-extern": {
-      "get": {
-        "summary": "finds company by its id",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "getCompany",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Company"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/resolve-type-extern": {
-      "get": {
-        "summary": "resolves a job type by its id",
-        "tags": [
-          "job"
-        ],
-        "operationId": "resolveJobType",
-        "parameters": [
-          {
-            "name": "keyword",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Jobtype"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-keyword-extern": {
-      "get": {
-        "summary": "resolves a keyword by its name",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "getKeyword",
-        "parameters": [
-          {
-            "name": "keyword",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Keywords"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/resolve-keyword-extern": {
-      "get": {
-        "summary": "resolves a keyword by its name",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "resolveKeyword",
-        "deprecated": true,
-        "parameters": [
-          {
-            "name": "keyword",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ResolveKeywordElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/resolve-location-extern": {
-      "get": {
-        "summary": "resolves a location by its address",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "resolveLocation",
-        "parameters": [
-          {
-            "name": "region",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "lang",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "address",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/ResolveLocationResponse"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/resolve-geo-extern": {
-      "get": {
-        "summary": "resolves a geocoding by coordinates",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "resolveGeo",
-        "parameters": [
-          {
-            "name": "location",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "lang",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/ResolveGeo"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-jobs-extern": {
-      "get": {
-        "summary": "gets all jobs for the mandator user",
-        "tags": [
-          "job"
-        ],
-        "operationId": "getJobs",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/GetJobsResponse"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ],
-        "parameters": []
-      }
-    },
-    "/disable-job-extern": {
-      "post": {
-        "summary": "disables an job",
-        "tags": [
-          "job"
-        ],
-        "operationId": "disableJob",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/ErrorCodeResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "job identifier",
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "jobCode": {
-                  "type": "string"
-                },
-                "sourceId": {
-                  "type": "string"
-                },
-                "jobId": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "/get-conversations-extern": {
-      "get": {
-        "summary": "gets conversations for a mandator user",
-        "tags": [
-          "conversation"
-        ],
-        "operationId": "getConversations",
-        "parameters": [
-          {
-            "in": "query",
-            "required": false,
-            "name": "startTime",
-            "description": "date in utc format",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": false,
-            "name": "endTime",
-            "description": "date in utc format",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": false,
-            "name": "csv",
-            "description": "true for csv format, empty for json",
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ConversationsResponseElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/ErrorCodeResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-all-applications-extern": {
-      "get": {
-        "summary": "gets applcations for a mandator user",
-        "tags": [
-          "application"
-        ],
-        "operationId": "getAllApplications",
-        "parameters": [
-          {
-            "in": "query",
-            "required": false,
-            "name": "startTime",
-            "description": "date in utc format",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": false,
-            "name": "endTime",
-            "description": "date in utc format",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": false,
-            "name": "csv",
-            "description": "true for csv format, empty for json",
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AllApplicantsResponseElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-fields-extern": {
-      "get": {
-        "summary": "returns all available job fields",
-        "tags": [
-          "job"
-        ],
-        "operationId": "getFields",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FieldsResponseElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ],
-        "parameters": []
-      }
-    },
-    "/get-question-list-extern": {
-      "get": {
-        "summary": "returns all available questions",
-        "tags": [
-          "job"
-        ],
-        "operationId": "getQuestionList",
-        "parameters": [
-          {
-            "in": "query",
-            "required": false,
-            "name": "csv",
-            "description": "true for csv format, empty for json",
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/QuestionsResponseElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-match-file-extern": {
-      "get": {
-        "summary": "returns a file from a match",
-        "tags": [
-          "match"
-        ],
-        "operationId": "getMatchFile",
-        "parameters": [
-          {
-            "in": "query",
-            "required": true,
-            "name": "match",
-            "description": "id for the match",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": true,
-            "name": "file",
-            "description": "name of the file",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "required": false,
-            "name": "type",
-            "description": "type of the file",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "file result"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "404": {
-            "description": "file not found"
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/add-job-extern": {
-      "post": {
-        "summary": "Creates a new Job",
-        "tags": [
-          "job"
-        ],
-        "operationId": "addJob",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/AddJobResponse"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "Job object",
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Job Titel"
-                },
-                "wage": {
-                  "type": "string",
-                  "description": "Wage"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "55d74e5d365315e629446d54",
-                    "55d74e7d365315e629446d55",
-                    "55d74f6c365315e629446d56",
-                    "55d74f96365315e629446d58",
-                    "56a90202c0b1e4ea4ede1a58",
-                    "56b352dcb5c5f2a71436dc51"
-                  ]
-                },
-                "fields": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "questions": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "company": {
-                  "type": "string"
-                },
-                "contactPhone": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "addressText": {
-                  "type": "string"
-                },
-                "region": {
-                  "type": "string"
-                },
-                "isPublished": {
-                  "type": "boolean"
-                },
-                "sourceId": {
-                  "type": "string"
-                },
-                "descriptionHTML": {
-                  "type": "string"
-                },
-                "language": {
-                  "type": "string"
-                },
-                "employmenttype": {
-                  "type": "string",
-                  "enum": [
-                    "570ff1bf056b57087012f9f8",
-                    "570ff242056b57087012f9fb",
-                    "570ff247056b57087012f9fc",
-                    "570ff24d056b57087012f9fd"
-                  ]
-                },
-                "requriedFields": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "/lookup-place": {
-      "get": {
-        "summary": "looks up a place near a location",
-        "tags": [
-          "misc"
-        ],
-        "operationId": "lookupPlace",
-        "parameters": [
-          {
-            "in": "query",
-            "required": true,
-            "name": "address",
-            "description": "address from where to search",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "description": "name the place near the address",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/LookupPlaceResponse"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/job-suggestions-extern": {
-      "get": {
-        "summary": "list of job suggestions",
-        "tags": [
-          "job"
-        ],
-        "operationId": "jobSuggestions",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "fields",
-            "description": "address from where to search",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "types",
-            "description": "job type",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "description": "max number of results",
-            "type": "integer"
-          },
-          {
-            "in": "query",
-            "name": "location",
-            "description": "location to seach nearby",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "multiLocations",
-            "description": "allows to use multiple locations",
-            "type": "boolean"
-          },
-          {
-            "in": "query",
-            "name": "offset",
-            "description": "skip first n results",
-            "type": "integer"
-          },
-          {
-            "in": "query",
-            "name": "maxDistance",
-            "description": "maximum distance from location",
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "keyword",
-            "description": "keywords or something",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "filters",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/JobSuggestionsResponseElement"
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    },
-    "/get-branch-by-id-extern": {
-      "get": {
-        "summary": "return a job field for an id",
-        "tags": [
-          "job"
-        ],
-        "operationId": "getBranchById",
-        "parameters": [
-          {
-            "in": "query",
-            "required": true,
-            "name": "id",
-            "description": "id of the job field",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/BranchResponse"
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/SuccessMsg"
-            }
-          }
-        },
-        "security": [
-          {
-            "hokify_session_token": []
-          }
-        ]
-      }
-    }
-  },
-  "externalDocs": {
-    "description": "Hokify Api Documentation",
-    "url": "https://devwiki.hokify.com/hokify-api"
-  },
-  "swagger": "2.0",
-  "schemes": [
-    "https"
-  ],
-  "host": "hokify.com",
-  "basePath": "/api",
-  "securityDefinitions": {
-    "hokify_session_token": {
-      "type": "apiKey",
-      "name": "x-session-token",
-      "in": "header"
-    }
-  },
   "definitions": {
-    "Info": {
+    "TypeObjectIdIAPIMatchAbstract": {
+      "properties": {},
       "type": "object",
+      "additionalProperties": true
+    },
+    "IMatchIdDto": {
       "properties": {
-        "message": {
-          "type": "string"
+        "matchId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIMatchAbstract"
         }
       },
-      "title": "info"
-    },
-    "APILoginResponse": {
+      "required": [
+        "matchId"
+      ],
       "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean"
-        },
-        "info": {
-          "$ref": "#/definitions/Info"
-        },
-        "sessionToken": {
-          "type": "string"
-        }
-      },
-      "title": "apiLoginResponse"
+      "additionalProperties": true
     },
-    "APILoginRequest": {
-      "type": "object",
-      "properties": {
-        "mandator": {
-          "type": "string",
-          "description": "mandator id"
-        },
-        "token": {
-          "type": "string",
-          "description": "api token"
-        }
-      }
-    },
-    "DocumentTypeElement": {
-      "type": "object",
+    "IHokifyDestinationToDto": {
       "properties": {
         "name": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "address": {
           "type": "string"
         },
-        "key": {
-          "type": "string"
+        "cc": {
+          "type": "string",
+          "x-nullable": true
         },
-        "type": {
-          "type": "string"
+        "bcc": {
+          "type": "string",
+          "x-nullable": true
         }
       },
-      "title": "DocumentType"
-    },
-    "SuccessMsg": {
+      "required": [
+        "address"
+      ],
       "type": "object",
+      "additionalProperties": true
+    },
+    "ICustomApplicationOptionsDto": {
       "properties": {
-        "success": {
-          "type": "boolean"
+        "to": {
+          "$ref": "#/definitions/IHokifyDestinationToDto",
+          "x-nullable": true
         },
-        "msg": {
-          "type": "string"
-        }
-      }
-    },
-    "R": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "array",
+        "from": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        },
+        "replyTo": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        },
+        "attachments": {
           "items": {
-            "type": "number"
-          }
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array",
+          "x-nullable": true
+        }
+      },
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IDeliverCustomHokifyApplicationDto": {
+      "properties": {
+        "matchId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIMatchAbstract"
+        },
+        "to": {
+          "$ref": "#/definitions/IHokifyDestinationToDto",
+          "x-nullable": true
+        },
+        "options": {
+          "$ref": "#/definitions/ICustomApplicationOptionsDto"
+        }
+      },
+      "required": [
+        "matchId",
+        "options"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIUser": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIImages": {
+      "properties": {
+        "thumbnail": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "small": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "medium": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "large": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "xlarge": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPISimpleBillingProfile": {
+      "properties": {
+        "position": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "slogan": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIUserExtra": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IUserExtraAntiVirusResult": {
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clean": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "timestamp",
+        "clean"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUserExtra": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIUserExtra"
         },
         "type": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "title": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "originalName": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "details": {
+          "type": "string"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "antiVirusResult": {
+          "$ref": "#/definitions/IUserExtraAntiVirusResult",
+          "x-nullable": true
         }
       },
-      "title": "r"
-    },
-    "DescriptionBlock": {
+      "required": [
+        "_id",
+        "type",
+        "title",
+        "url",
+        "originalName",
+        "date",
+        "details",
+        "visible"
+      ],
       "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIUserCvExperience": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPICompanySnippet": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPICompanySnippet": {
       "properties": {
-        "language": {
-          "type": "string"
-        },
-        "block1": {
-          "type": "string"
-        },
         "_id": {
-          "type": "string"
-        }
-      },
-      "title": "descriptionBlock"
-    },
-    "ExtractedKeyword": {
-      "type": "object",
-      "properties": {
-        "keyword": {
-          "type": "string"
-        },
-        "score": {
-          "type": "integer"
-        },
-        "_id": {
-          "type": "string"
-        }
-      },
-      "title": "extractedKeyword"
-    },
-    "Images": {
-      "type": "object",
-      "properties": {
-        "thumbnail": {
-          "type": "string"
-        },
-        "small": {
-          "type": "string"
-        },
-        "medium": {
-          "type": "string"
-        },
-        "large": {
-          "type": "string"
-        },
-        "xlarge": {
-          "type": "string"
-        }
-      },
-      "title": "images"
-    },
-    "Field": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        }
-      },
-      "title": "field"
-    },
-    "Logos": {
-      "type": "object",
-      "properties": {
-        "thumbnail": {
-          "type": "string"
-        },
-        "small": {
-          "type": "string"
-        },
-        "medium": {
-          "type": "string"
-        },
-        "large": {
-          "type": "string"
-        },
-        "xlarge": {
-          "type": "string"
-        }
-      },
-      "title": "logos"
-    },
-    "JobCompany": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
+          "$ref": "#/definitions/TypeObjectIdIAPICompanySnippet"
         },
         "name": {
           "type": "string"
         },
         "logos": {
-          "$ref": "#/definitions/Logos"
-        }
-      },
-      "title": "company"
-    },
-    "Internal": {
-      "type": "object",
-      "properties": {
-        "isPublished": {
-          "type": "boolean"
-        },
-        "publishedDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "region": {
-          "type": "string"
-        }
-      },
-      "title": "internal"
-    },
-    "Job": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "jobNr": {
-          "type": "integer"
-        },
-        "alias": {
-          "type": "string"
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
         },
         "description": {
-          "type": "string"
-        },
-        "wage": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "r": {
-          "$ref": "#/definitions/R"
-        },
-        "rounds": {
-          "type": "array",
-          "items": {}
-        },
-        "specificFields": {
-          "type": "array",
-          "items": {}
-        },
-        "timeFrame": {
-          "type": "array",
-          "items": {}
-        },
-        "_tags": {
-          "type": "array",
-          "items": {}
-        },
-        "date": {
           "type": "string",
-          "format": "date-time"
+          "x-nullable": true
         },
-        "requiredFields": {
-          "type": "array",
-          "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/RequiredField"
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "title": "requiredField"
-          }
-        },
-        "yourTask": {
-          "type": "array",
-          "items": {}
-        },
-        "weOffer": {
-          "type": "array",
-          "items": {}
-        },
-        "weWant": {
-          "type": "array",
-          "items": {}
-        },
-        "travelNeeded": {
-          "type": "boolean"
-        },
-        "remoteWork": {
-          "type": "boolean"
-        },
-        "descriptionBlocks": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DescriptionBlock"
-          }
-        },
-        "defaultLanguage": {
-          "type": "string"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "extractedKeywords": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ExtractedKeyword"
-          }
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "webUrl": {
-          "type": "string"
-        },
-        "images": {
-          "$ref": "#/definitions/Images"
-        },
-        "type": {
-          "type": "string"
-        },
-        "fields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Field"
-          }
-        },
-        "location": {
-          "$ref": "#/definitions/Location"
-        },
-        "company": {
-          "$ref": "#/definitions/JobCompany"
-        },
-        "internal": {
-          "$ref": "#/definitions/Internal"
-        },
-        "owners": {
-          "type": "array",
-          "items": {}
+        "coverImage": {
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
         }
       },
-      "title": "Job"
-    },
-    "PossibleFilter": {
+      "required": [
+        "_id",
+        "name"
+      ],
       "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUserCvExperience": {
       "properties": {
-        "filter": {
-          "type": "string"
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIUserCvExperience"
         },
         "title": {
           "type": "string"
         },
-        "type": {
+        "summary": {
           "type": "string"
-        }
-      },
-      "title": "possibleFilt"
-    },
-    "LandingPageResults": {
-      "type": "object",
-      "properties": {
-        "_allTypes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
-        "jobNrs": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "count": {
-          "type": "integer"
-        },
-        "avgScore": {
-          "type": "number"
-        },
-        "maxScore": {
-          "type": "number"
-        },
-        "minWage": {
-          "type": "integer"
-        },
-        "maxWage": {
-          "type": "integer"
-        },
-        "possibleFilters": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PossibleFilter"
-          }
-        },
-        "generatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "filterUpdatedAt": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "title": "results"
-    },
-    "Branch": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+        "company": {
+          "$ref": "#/definitions/IAPICompanySnippet",
+          "x-nullable": true
         },
         "fields": {
-          "type": "array",
-          "items": {}
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isCurrent": {
+          "type": "boolean"
+        },
+        "isVisible": {
+          "type": "boolean"
+        },
+        "selectedAsHighlight": {
+          "type": "boolean"
         }
       },
-      "title": "branch"
-    },
-    "LandingPageLocation": {
+      "required": [
+        "_id",
+        "title",
+        "summary",
+        "fields",
+        "startDate",
+        "endDate",
+        "isCurrent",
+        "isVisible",
+        "selectedAsHighlight"
+      ],
       "type": "object",
-      "properties": {
-        "geo": {
-          "type": "array",
-          "items": {}
-        }
-      },
-      "title": "location"
+      "additionalProperties": true
     },
-    "Landingpage": {
+    "TypeObjectIdIAPIUserCvEducation": {
+      "properties": {},
       "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPISchool": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPISchool": {
       "properties": {
         "_id": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "pageType": {
-          "type": "string"
-        },
-        "geoRegion": {
-          "type": "string"
-        },
-        "useIndex": {
-          "type": "boolean"
-        },
-        "url": {
-          "type": "string"
-        },
-        "lpVersion": {
-          "type": "integer"
-        },
-        "results": {
-          "$ref": "#/definitions/LandingPageResults"
-        },
-        "neededCount": {
-          "type": "integer"
-        },
-        "usedCount": {
-          "type": "integer"
-        },
-        "branch": {
-          "$ref": "#/definitions/Branch"
-        },
-        "location": {
-          "$ref": "#/definitions/LandingPageLocation"
-        },
-        "canonicalUrl": {
-          "type": "string"
-        },
-        "hasResults": {
-          "type": "boolean"
-        },
-        "lastCanonicalResult": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "lastMod": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "isCanonical": {
-          "type": "boolean"
-        },
-        "filters": {
-          "type": "array",
-          "items": {}
-        },
-        "firstTimeCanonical": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "canonicalResult": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "lastLPIrunResult": {
-          "type": "string"
-        },
-        "lastLPITouch": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "title": "Landingpage"
-    },
-    "CompanyInternal": {
-      "type": "object",
-      "properties": {
-        "availableRegions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "availableRegionsWithJobs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "publishToSEOIndex": {
-          "type": "array",
-          "items": {}
-        },
-        "sendSummaryAt": {
-          "type": "string"
-        },
-        "sendSummaryEvery": {
-          "type": "string"
-        }
-      },
-      "title": "company-internal"
-    },
-    "Company": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
+          "$ref": "#/definitions/TypeObjectIdIAPISchool"
         },
         "name": {
           "type": "string"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "alias": {
-          "type": "string"
-        },
-        "internal": {
-          "$ref": "#/definitions/CompanyInternal"
-        },
-        "rejectionText": {
-          "type": "array",
-          "items": {}
-        },
-        "trustedUsers": {
-          "type": "array",
-          "items": {}
-        },
-        "dbV": {
-          "type": "integer"
         }
       },
-      "title": "Company"
-    },
-    "KeywordInfo": {
+      "required": [
+        "_id",
+        "name"
+      ],
       "type": "object",
-      "properties": {
-        "label": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "info"
+      "additionalProperties": true
     },
-    "Keywords": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean"
-        },
-        "keywords": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "keyword": {
-          "type": "string"
-        },
-        "info": {
-          "$ref": "#/definitions/KeywordInfo"
-        }
-      },
-      "title": "Keywords"
+    "EducationStatus": {
+      "enum": [
+        "completed",
+        "canceled",
+        "studying"
+      ],
+      "type": "string"
     },
-    "ResolveKeywordElement": {
-      "type": "object",
+    "IAPIUserCvEducation": {
       "properties": {
         "_id": {
-          "type": "string"
-        }
-      },
-      "title": "ResolveKeyword"
-    },
-    "AdministrativeLevels": {
-      "type": "object",
-      "properties": {
-        "level1long": {
-          "type": "string"
+          "$ref": "#/definitions/TypeObjectIdIAPIUserCvEducation"
         },
-        "level1short": {
-          "type": "string"
-        }
-      },
-      "title": "administrativeLevels"
-    },
-    "ResolveLocationResponse": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
+        "school": {
+          "$ref": "#/definitions/IAPISchool"
         },
-        "language": {
-          "type": "string"
+        "level": {
+          "additionalProperties": true,
+          "type": "object"
         },
-        "latitude": {
-          "type": "number"
+        "sublevel": {
+          "additionalProperties": true,
+          "type": "object"
         },
-        "longitude": {
-          "type": "number"
-        },
-        "street": {
-          "type": "string"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "administrativeLevels": {
-          "$ref": "#/definitions/AdministrativeLevels"
-        },
-        "city": {
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
-        "countryCode": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "district": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "streetNumber": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        }
-      },
-      "title": "ResolveLocationResponse"
-    },
-    "GeoLocation": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
-        },
-        "street": {
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "district": {
-          "type": "string"
-        },
-        "countryCode": {
-          "type": "string"
-        },
-        "language": {
-          "type": "string"
-        }
-      },
-      "title": "GeoLocation"
-    },
-    "ResolveGeo": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean"
-        },
-        "location": {
-          "$ref": "#/definitions/GeoLocation"
-        }
-      },
-      "title": "ResolveGeo"
-    },
-    "RequiredField": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "question": {
-          "type": "string"
-        },
-        "questiontype": {
-          "type": "string"
-        },
-        "answerMinLength": {
-          "type": "integer"
-        },
-        "answerMaxLength": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        }
-      },
-      "title": "requiredField"
-    },
-    "GetJob": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "jobNr": {
-          "type": "integer"
-        },
-        "alias": {
-          "type": "string"
+        "degree": {
+          "additionalProperties": true,
+          "type": "object"
         },
         "description": {
           "type": "string"
         },
-        "_type": {
-          "type": "string"
-        },
-        "wage": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "r": {
-          "$ref": "#/definitions/R"
-        },
-        "rounds": {
-          "type": "array",
-          "items": {}
-        },
-        "specificFields": {
-          "type": "array",
-          "items": {}
-        },
-        "timeFrame": {
-          "type": "array",
-          "items": {}
-        },
-        "_tags": {
-          "type": "array",
-          "items": {}
-        },
-        "date": {
+        "startDate": {
           "type": "string",
           "format": "date-time"
         },
-        "requiredFields": {
-          "type": "array",
-          "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/RequiredField"
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "title": "requiredField"
-          }
-        },
-        "yourTask": {
-          "type": "array",
-          "items": {}
-        },
-        "weOffer": {
-          "type": "array",
-          "items": {}
-        },
-        "weWant": {
-          "type": "array",
-          "items": {}
-        },
-        "travelNeeded": {
-          "type": "boolean"
-        },
-        "remoteWork": {
-          "type": "boolean"
-        },
-        "descriptionBlocks": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DescriptionBlock"
-          }
-        },
-        "defaultLanguage": {
-          "type": "string"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "extractedKeywords": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ExtractedKeyword"
-          }
-        },
-        "updatedAt": {
+        "endDate": {
           "type": "string",
           "format": "date-time"
         },
-        "webUrl": {
-          "type": "string"
-        },
-        "images": {
-          "$ref": "#/definitions/Logos"
-        },
-        "location": {
-          "$ref": "#/definitions/Location"
-        },
-        "company": {
-          "$ref": "#/definitions/JobCompany"
-        },
-        "internal": {
-          "$ref": "#/definitions/Internal"
-        },
-        "owners": {
-          "type": "array",
-          "items": {}
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "addressText": {
-          "type": "string"
-        },
-        "_oldOwner": {
-          "type": "array",
-          "items": {}
-        }
-      },
-      "title": "job"
-    },
-    "GetJobsResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
+        "isVisible": {
           "type": "boolean"
         },
-        "jobs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GetJob"
-          }
-        }
-      },
-      "title": "GetJobsResponse"
-    },
-    "ErrorCodeResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
+        "status": {
+          "$ref": "#/definitions/EducationStatus"
+        },
+        "selectedAsHighlight": {
           "type": "boolean"
-        },
-        "code": {
-          "type": "string"
-        },
-        "msg": {
-          "type": "string"
         }
       },
-      "title": "ErrorCodeResponse"
-    },
-    "AdditionalFile": {
+      "required": [
+        "_id",
+        "school",
+        "level",
+        "sublevel",
+        "degree",
+        "description",
+        "startDate",
+        "endDate",
+        "isVisible",
+        "status",
+        "selectedAsHighlight"
+      ],
       "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIUserCvSkill": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPICvSkill": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUserCvSkillCategory": {
       "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPICvSkill"
+        },
+        "value": {
+          "type": "string"
+        },
         "type": {
           "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "downloadUrl": {
-          "type": "string"
         }
       },
-      "title": "additionalFile"
-    },
-    "AllApplicantsResponseElement": {
+      "required": [
+        "_id",
+        "value",
+        "type"
+      ],
       "type": "object",
-      "properties": {
-        "jobId": {
-          "type": "string"
-        },
-        "jobSourceId": {
-          "type": "string"
-        },
-        "matchId": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "hokifyMail": {
-          "type": "string"
-        },
-        "fileProfile": {
-          "type": "string"
-        },
-        "fileCV": {
-          "type": "string"
-        },
-        "additionalFiles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AdditionalFile"
-          }
-        },
-        "nationality": {
-          "type": "string"
-        },
-        "applicationDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "birthday": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "gender": {
-          "type": "string"
-        }
-      },
-      "title": "AllApplicantsResponse"
+      "additionalProperties": true
     },
-    "FieldsResponseElement": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "children": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FieldsResponseElement"
-          }
-        }
-      },
-      "title": "FieldsResponseElement"
-    },
-    "Jobtype": {
-      "type": "object",
+    "IAPIUserCvSkill": {
       "properties": {
         "_id": {
-          "type": "string"
-        },
-        "de": {
-          "type": "string"
-        }
-      },
-      "title": "Jobtype"
-    },
-    "QuestionsResponseElement": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "de_short": {
-          "type": "string"
+          "$ref": "#/definitions/TypeObjectIdIAPIUserCvSkill"
         },
         "category": {
-          "type": "string"
+          "$ref": "#/definitions/IAPIUserCvSkillCategory",
+          "x-nullable": true
         },
-        "de": {
-          "type": "string"
-        },
-        "_jobtype": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Jobtype"
-          }
-        }
-      },
-      "title": "QuestionsResponse"
-    },
-    "Views": {
-      "type": "object",
-      "properties": {
-        "web": {
-          "type": "integer"
-        },
-        "app": {
-          "type": "integer"
-        },
-        "external": {
-          "type": "integer"
-        }
-      }
-    },
-    "Stats": {
-      "type": "object",
-      "properties": {
-        "discarded": {
-          "type": "integer"
-        },
-        "saved": {
-          "type": "integer"
-        },
-        "applied": {
-          "type": "integer"
-        },
-        "appliedLast30Days": {
-          "type": "integer"
-        },
-        "smslink": {
-          "type": "integer"
-        },
-        "views": {
-          "$ref": "#/definitions/Views"
-        }
-      },
-      "title": "stats"
-    },
-    "AddJobInternal": {
-      "type": "object",
-      "properties": {
-        "adsCreated": {
-          "type": "boolean"
-        },
-        "manualPrioMode": {
-          "type": "boolean"
-        },
-        "costs": {
-          "type": "integer"
-        },
-        "region": {
-          "type": "string"
-        },
-        "location": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "source": {
-          "type": "integer"
-        },
-        "isPublished": {
-          "type": "boolean"
-        },
-        "isPrepared": {
-          "type": "boolean"
-        },
-        "isPending": {
-          "type": "boolean"
-        },
-        "isService": {
-          "type": "boolean"
-        },
-        "offline": {
-          "type": "boolean"
-        },
-        "stats": {
-          "$ref": "#/definitions/Stats"
-        },
-        "_packages": {
-          "type": "array",
-          "items": {}
-        },
-        "autoExtend": {
-          "type": "boolean"
-        },
-        "notifiedLowRuntime": {
-          "type": "boolean"
-        },
-        "jobCode": {
-          "type": "string"
-        }
-      },
-      "title": "internal"
-    },
-    "Question": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        }
-      },
-      "title": "question"
-    },
-    "Location": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "street": {
-          "type": "string"
-        },
-        "streetNumber": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        },
-        "district": {
-          "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "longitude": {
-          "type": "number"
-        },
-        "latitude": {
-          "type": "number"
-        },
-        "countryCode": {
-          "type": "string"
-        },
-        "language": {
-          "type": "string"
-        }
-      },
-      "title": "location"
-    },
-    "AddJobCompany": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "title": "company"
-    },
-    "AddJob": {
-      "type": "object",
-      "properties": {
-        "internal": {
-          "$ref": "#/definitions/AddJobInternal"
-        },
-        "defaultLanguage": {
-          "type": "string"
-        },
-        "descriptionBlocks": {
-          "type": "array",
-          "items": {}
-        },
-        "requiredFields": {
-          "type": "array",
-          "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/RequiredField"
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "title": "requiredField"
-          }
-        },
-        "date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "_tags": {
-          "type": "array",
-          "items": {}
-        },
-        "_oldOwner": {
-          "type": "array",
-          "items": {}
-        },
-        "_id": {
-          "type": "string"
-        },
-        "wage": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "jobNr": {
-          "type": "integer"
-        },
-        "__v": {
-          "type": "integer"
-        },
-        "openRecruiterTodos": {
-          "type": "integer"
-        },
-        "questions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Question"
-          }
-        },
-        "type": {
-          "type": "string"
-        },
-        "fields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Field"
-          }
-        },
-        "webUrl": {
-          "type": "string"
-        },
-        "images": {
-          "$ref": "#/definitions/Images"
-        },
-        "statsDownloadCode": {
-          "type": "string"
-        },
-        "location": {
-          "$ref": "#/definitions/Location"
-        },
-        "company": {
-          "$ref": "#/definitions/AddJobCompany"
-        },
-        "owners": {
-          "type": "array",
-          "items": {}
-        }
-      },
-      "title": "job"
-    },
-    "AddJobResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean"
-        },
-        "msg": {
-          "type": "string"
-        },
-        "job": {
-          "$ref": "#/definitions/AddJob"
-        },
-        "modified": {
-          "type": "boolean"
-        },
-        "created": {
-          "type": "boolean"
-        },
-        "warnings": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "AddJobResponse"
-    },
-    "AddressComponent": {
-      "type": "object",
-      "properties": {
-        "long_name": {
-          "type": "string"
-        },
-        "short_name": {
-          "type": "string"
-        },
-        "types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "address_component"
-    },
-    "LookupPlaceLocation": {
-      "type": "object",
-      "properties": {
-        "lat": {
-          "type": "number"
-        },
-        "lng": {
-          "type": "number"
-        }
-      },
-      "title": "location"
-    },
-    "Viewport": {
-      "type": "object",
-      "properties": {
-        "northeast": {
-          "$ref": "#/definitions/LookupPlaceLocation"
-        },
-        "southwest": {
-          "$ref": "#/definitions/LookupPlaceLocation"
-        }
-      },
-      "title": "viewport"
-    },
-    "Geometry": {
-      "type": "object",
-      "properties": {
-        "location": {
-          "$ref": "#/definitions/LookupPlaceLocation"
-        },
-        "viewport": {
-          "$ref": "#/definitions/Viewport"
-        }
-      },
-      "title": "geometry"
-    },
-    "Close": {
-      "type": "object",
-      "properties": {
-        "day": {
-          "type": "integer"
-        },
-        "time": {
-          "type": "string"
-        }
-      },
-      "title": "close"
-    },
-    "Period": {
-      "type": "object",
-      "properties": {
-        "close": {
-          "$ref": "#/definitions/Close"
-        },
-        "open": {
-          "$ref": "#/definitions/Close"
-        }
-      },
-      "title": "period"
-    },
-    "OpeningHours": {
-      "type": "object",
-      "properties": {
-        "open_now": {
-          "type": "boolean"
-        },
-        "periods": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Period"
-          }
-        },
-        "weekday_text": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "opening_hours"
-    },
-    "Photo": {
-      "type": "object",
-      "properties": {
-        "height": {
-          "type": "integer"
-        },
-        "html_attributions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "photo_reference": {
-          "type": "string"
-        },
-        "width": {
-          "type": "integer"
-        }
-      },
-      "title": "photo"
-    },
-    "Review": {
-      "type": "object",
-      "properties": {
-        "author_name": {
-          "type": "string"
-        },
-        "author_url": {
-          "type": "string"
-        },
-        "language": {
-          "type": "string"
-        },
-        "profile_photo_url": {
-          "type": "string"
-        },
-        "rating": {
-          "type": "integer"
-        },
-        "relative_time_description": {
+        "title": {
           "type": "string"
         },
         "text": {
           "type": "string"
         },
-        "time": {
-          "type": "integer"
-        }
-      },
-      "title": "review"
-    },
-    "LookupPlaceResult": {
-      "type": "object",
-      "properties": {
-        "address_components": {
-          "type": "array",
+        "order": {
+          "type": "number",
+          "format": "double"
+        },
+        "items": {
           "items": {
-            "$ref": "#/definitions/AddressComponent"
-          }
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
         },
-        "adr_address": {
-          "type": "string"
-        },
-        "formatted_address": {
-          "type": "string"
-        },
-        "formatted_phone_number": {
-          "type": "string"
-        },
-        "geometry": {
-          "$ref": "#/definitions/Geometry"
-        },
-        "icon": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "international_phone_number": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "opening_hours": {
-          "$ref": "#/definitions/OpeningHours"
-        },
-        "photos": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Photo"
-          }
-        },
-        "place_id": {
-          "type": "string"
-        },
-        "rating": {
-          "type": "integer"
-        },
-        "reference": {
-          "type": "string"
-        },
-        "reviews": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Review"
-          }
-        },
-        "scope": {
-          "type": "string"
-        },
-        "types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "url": {
-          "type": "string"
-        },
-        "utc_offset": {
-          "type": "integer"
-        },
-        "vicinity": {
-          "type": "string"
-        },
-        "website": {
-          "type": "string"
-        }
-      },
-      "title": "LookupPlaceResult"
-    },
-    "LookupPlaceResponse": {
-      "type": "object",
-      "properties": {
-        "html_attributions": {
-          "type": "array",
-          "items": {}
-        },
-        "result": {
-          "$ref": "#/definitions/LookupPlaceResult"
-        },
-        "status": {
-          "type": "string"
-        }
-      },
-      "title": "LookupPlaceResponse"
-    },
-    "BranchResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
+        "isVisible": {
           "type": "boolean"
-        },
-        "keyword": {
-          "type": "string"
         }
       },
-      "title": "BranchResponse"
-    },
-    "ConversationsResponseElement": {
+      "required": [
+        "_id",
+        "title",
+        "text",
+        "order",
+        "items",
+        "isVisible"
+      ],
       "type": "object",
-      "properties": {
-        "msgId": {
-          "type": "string"
-        },
-        "jobId": {
-          "type": "string"
-        },
-        "sender": {
-          "type": "string"
-        },
-        "matchId": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "hokifyMail": {
-          "type": "string"
-        },
-        "jobName": {
-          "type": "string"
-        },
-        "companyName": {
-          "type": "string"
-        },
-        "msgTime": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "msg": {
-          "type": "string"
-        }
-      },
-      "title": "ConversationsResponse"
+      "additionalProperties": true
     },
-    "JobSuggestionsResponseElement": {
-      "type": "object",
+    "IAPILocation": {
       "properties": {
         "_id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "name": {
           "type": "string"
         },
+        "street": {
+          "type": "string"
+        },
+        "streetNumber": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "street",
+        "streetNumber",
+        "district",
+        "city",
+        "county",
+        "country",
+        "code",
+        "longitude",
+        "latitude",
+        "countryCode"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUserCvReference": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number",
+          "format": "double"
+        },
+        "relation": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "position": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "company": {
+          "$ref": "#/definitions/IAPICompanySnippet",
+          "x-nullable": true
+        },
+        "address": {
+          "$ref": "#/definitions/IAPILocation"
+        },
+        "isVisible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "contact",
+        "order",
+        "relation",
+        "position",
+        "address",
+        "isVisible"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ICVInfoCompletness": {
+      "properties": {
+        "education": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "string"
+        },
+        "fraction": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "skill": {
+          "type": "string"
+        },
+        "minPercentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "missing": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "readyToUse": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "education",
+        "email",
+        "experience",
+        "fraction",
+        "image",
+        "location",
+        "name",
+        "phone",
+        "skill",
+        "minPercentage",
+        "missing",
+        "percentage",
+        "readyToUse"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPICvInfo": {
+      "properties": {
+        "experiences": {
+          "items": {
+            "$ref": "#/definitions/IAPIUserCvExperience"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "educations": {
+          "items": {
+            "$ref": "#/definitions/IAPIUserCvEducation"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "skills": {
+          "items": {
+            "$ref": "#/definitions/IAPIUserCvSkill"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "references": {
+          "items": {
+            "$ref": "#/definitions/IAPIUserCvReference"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "experienceSummary": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "completeness": {
+          "$ref": "#/definitions/ICVInfoCompletness"
+        }
+      },
+      "required": [
+        "completeness"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUser": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIUser"
+        },
+        "displayName": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "lastActivity": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "privacyAutoDeleted": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "images": {
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "company",
+            "jobseeker"
+          ],
+          "x-nullable": true
+        },
+        "language": {
+          "type": "string"
+        },
+        "general": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        },
+        "billingProfile": {
+          "$ref": "#/definitions/IAPISimpleBillingProfile",
+          "x-nullable": true
+        },
+        "extras": {
+          "items": {
+            "$ref": "#/definitions/IAPIUserExtra"
+          },
+          "type": "array"
+        },
+        "cvInfo": {
+          "$ref": "#/definitions/IAPICvInfo"
+        }
+      },
+      "required": [
+        "_id",
+        "lastActivity",
+        "language",
+        "extras",
+        "cvInfo"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobDescriptionBlock": {
+      "properties": {
+        "language": {
+          "type": "string"
+        },
+        "block1Header": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block1": {
+          "type": "string"
+        },
+        "block2Header": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block2": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block3Header": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block3": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block4Header": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "block4": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "language",
+        "block1"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPICompany": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPICompany": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPICompany"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logos": {
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
+        },
+        "description": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "coverImage": {
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "_id",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIAbstractJob": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIJobOwner": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobOwner": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIJobOwner"
+        },
+        "displayName": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "images": {
+          "$ref": "#/definitions/IAPIImages",
+          "x-nullable": true
+        },
+        "general": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "billingProfile": {
+          "$ref": "#/definitions/IAPISimpleBillingProfile"
+        }
+      },
+      "required": [
+        "_id",
+        "general",
+        "billingProfile"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIJobField": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobField": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIJobField"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIQuestion": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobQuestion": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIQuestion"
+        },
+        "question": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "externalId": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "_id",
+        "question",
+        "required"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobForRecruiter": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIAbstractJob"
+        },
         "jobNr": {
-          "type": "integer"
+          "type": "number",
+          "format": "double"
         },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
+        "name": {
+          "type": "string"
         },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
+        "images": {
+          "$ref": "#/definitions/IAPIImages"
         },
-        "alias": {
+        "location": {
+          "$ref": "#/definitions/IAPILocation"
+        },
+        "addressText": {
+          "type": "string"
+        },
+        "owners": {
+          "items": {
+            "$ref": "#/definitions/IAPIJobOwner"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "webUrl": {
           "type": "string"
         },
         "description": {
@@ -2661,74 +942,2053 @@
         "wage": {
           "type": "string"
         },
-        "name": {
+        "type": {
           "type": "string"
         },
-        "r": {
-          "$ref": "#/definitions/R"
+        "fields": {
+          "items": {
+            "$ref": "#/definitions/IAPIJobField"
+          },
+          "type": "array"
         },
-        "_oldOwner": {
+        "questions": {
+          "items": {
+            "$ref": "#/definitions/IAPIJobQuestion"
+          },
           "type": "array",
-          "items": {}
+          "x-nullable": true
         },
-        "_tags": {
-          "type": "array",
-          "items": {}
+        "requiredFields": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "employmenttype": {
+          "type": "string"
+        },
+        "isJobOwner": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "internal": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "company": {
+          "$ref": "#/definitions/IAPICompany"
+        },
+        "staticMapImageUrl": {
+          "type": "string"
+        },
+        "selectedCandidate": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "personalCompanyText": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "webPreviewUrl": {
+          "type": "string",
+          "x-nullable": true
         },
         "date": {
           "type": "string",
           "format": "date-time"
         },
-        "requiredFields": {
-          "type": "array",
-          "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/RequiredField"
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "title": "requiredField"
-          }
-        },
         "descriptionBlocks": {
-          "type": "array",
           "items": {
-            "$ref": "#/definitions/DescriptionBlock"
-          }
+            "$ref": "#/definitions/IAPIJobDescriptionBlock"
+          },
+          "type": "array"
+        },
+        "statsDownloadCode": {
+          "type": "string"
         },
         "defaultLanguage": {
           "type": "string"
         },
-        "__v": {
-          "type": "integer"
-        },
-        "webUrl": {
-          "type": "string"
-        },
-        "images": {
-          "$ref": "#/definitions/Images"
-        },
+        "openRecruiterTodos": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "_id",
+        "jobNr",
+        "name",
+        "images",
+        "location",
+        "addressText",
+        "webUrl",
+        "description",
+        "wage",
+        "type",
+        "fields",
+        "requiredFields",
+        "employmenttype",
+        "internal",
+        "company",
+        "staticMapImageUrl",
+        "date",
+        "descriptionBlocks",
+        "statsDownloadCode",
+        "defaultLanguage"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "InterviewType": {
+      "enum": [
+        "profile",
+        "attachment",
+        "question",
+        "information"
+      ],
+      "type": "string"
+    },
+    "IInterviewAnswerOption": {
+      "properties": {
         "type": {
           "type": "string"
         },
-        "location": {
-          "$ref": "#/definitions/Location"
+        "defaultValue": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
         },
-        "company": {
-          "$ref": "#/definitions/JobCompany"
-        },
-        "internal": {
-          "$ref": "#/definitions/Internal"
-        },
-        "owners": {
-          "type": "array",
-          "items": {}
+        "prefillValue": {
+          "type": "boolean",
+          "x-nullable": true
         }
       },
-      "title": "JobSuggestionsResponse"
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IInterviewQuestion": {
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "moduleOptions": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/InterviewType"
+        },
+        "question": {
+          "type": "string"
+        },
+        "currentAnswer": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "answerOptions": {
+          "items": {
+            "$ref": "#/definitions/IInterviewAnswerOption"
+          },
+          "type": "array",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "_id",
+        "module",
+        "moduleOptions",
+        "type",
+        "question"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "LikeUser": {
+      "enum": [
+        "true",
+        "false",
+        "saved",
+        "pending",
+        "needreview"
+      ],
+      "type": "string"
+    },
+    "ActionToken": {
+      "enum": [
+        "user",
+        "company",
+        "done",
+        "cancel"
+      ],
+      "type": "string"
+    },
+    "IAPIMatchWithUserAndRecruiterJob": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIMatchAbstract"
+        },
+        "openMessages": {
+          "type": "number",
+          "format": "double"
+        },
+        "dateuseraction": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "likeuser": {
+          "$ref": "#/definitions/LikeUser"
+        },
+        "datecompanyaction": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "likecompany": {
+          "type": "boolean"
+        },
+        "datematch": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "actionToken": {
+          "$ref": "#/definitions/ActionToken"
+        },
+        "lastupdate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "answers": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "user": {
+          "$ref": "#/definitions/IAPIUser"
+        },
+        "job": {
+          "$ref": "#/definitions/IAPIJobForRecruiter"
+        },
+        "interviewQuestions": {
+          "items": {
+            "$ref": "#/definitions/IInterviewQuestion"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "_id",
+        "openMessages",
+        "dateuseraction",
+        "likeuser",
+        "datecompanyaction",
+        "likecompany",
+        "datematch",
+        "actionToken",
+        "lastupdate",
+        "answers",
+        "user",
+        "job",
+        "interviewQuestions"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIHokifyApplicationResult": {
+      "properties": {
+        "to": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "from": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "attachments": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "match": {
+          "$ref": "#/definitions/IAPIMatchWithUserAndRecruiterJob"
+        },
+        "replyTo": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "to",
+        "from",
+        "attachments",
+        "match"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIAnswer": {
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "boolean"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "question",
+        "decision",
+        "date"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPICustomQuestionResult": {
+      "properties": {
+        "answer": {
+          "$ref": "#/definitions/IAPIAnswer",
+          "x-nullable": true
+        },
+        "question": {
+          "$ref": "#/definitions/IAPIJobQuestion"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIUserExtraResult": {
+      "properties": {
+        "fileContent": {
+          "type": "string",
+          "format": "byte"
+        },
+        "fileExt": {
+          "type": "string"
+        },
+        "fileContentType": {
+          "type": "string"
+        },
+        "extra": {
+          "$ref": "#/definitions/IAPIUserExtra"
+        }
+      },
+      "required": [
+        "fileContent",
+        "fileExt",
+        "fileContentType",
+        "extra"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IMailAttachmentContent": {
+      "properties": {
+        "filename": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "fileExt": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "required": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "type": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "contentId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "checksum": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "content": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IMatchIdApplicationIdDto": {
+      "properties": {
+        "matchId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIMatchAbstract"
+        },
+        "applicationId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "matchId",
+        "applicationId"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IMatchIdSendWarningDto": {
+      "properties": {
+        "matchId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIMatchAbstract"
+        },
+        "sendWarning": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "matchId",
+        "sendWarning"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "AuthTokenResponse": {
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "access_token",
+        "expires_in"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIQuestion": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIQuestion"
+        }
+      },
+      "required": [
+        "_id"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IFindOrCreateQuestionRequest": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "title",
+        "shortTitle"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIJobType": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIFeatureSet": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TypeObjectIdIAPIPrice": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IJobEditFields": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "fields": {
+          "items": {
+            "$ref": "#/definitions/TypeObjectIdIAPIJobField"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "type": {
+          "$ref": "#/definitions/TypeObjectIdIAPIJobType",
+          "x-nullable": true
+        },
+        "image": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "questions": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "requiredFields": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "region": {
+          "type": "string"
+        },
+        "featureSet": {
+          "$ref": "#/definitions/TypeObjectIdIAPIFeatureSet",
+          "x-nullable": true
+        },
+        "address": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "addressGEO": {
+          "items": {
+            "type": "number",
+            "format": "double"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "addressText": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "contactEmail": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "contactPhone": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "wage": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "autoExtend": {
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "autoDisableAt": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "priceId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIPrice",
+          "x-nullable": true
+        },
+        "featureId": {
+          "$ref": "#/definitions/TypeObjectIdIAPIFeatureSet",
+          "x-nullable": true
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "descriptionHTML": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "descriptionBlocks": {
+          "items": {
+            "$ref": "#/definitions/IAPIJobDescriptionBlock"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "company": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "companyId": {
+          "$ref": "#/definitions/TypeObjectIdIAPICompany",
+          "x-nullable": true
+        },
+        "ownerEmails": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-nullable": true
+        },
+        "defaultLanguage": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "employmenttype": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "region",
+        "isPublished"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ICreateOrUpdateJobRequest": {
+      "properties": {
+        "sourceId": {
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/definitions/IJobEditFields"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "jobPic": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        },
+        "clientIp": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "sourceId",
+        "params",
+        "lang"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "JobApiModuleOption": {
+      "enum": [
+        "init",
+        "collect",
+        "message",
+        "deliver"
+      ],
+      "type": "string"
+    },
+    "IReportJobApiErrorRequest": {
+      "properties": {
+        "sourceId": {
+          "type": "string"
+        },
+        "module": {
+          "$ref": "#/definitions/JobApiModuleOption"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "warning",
+            "info"
+          ]
+        },
+        "message": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "sourceId",
+        "module",
+        "severity"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IResolveJobApiErrorRequest": {
+      "properties": {
+        "sourceId": {
+          "type": "string"
+        },
+        "module": {
+          "$ref": "#/definitions/JobApiModuleOption"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "warning",
+            "info"
+          ]
+        }
+      },
+      "required": [
+        "sourceId",
+        "module",
+        "severity"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IUnpublishJobsWithSourceIdsRequest": {
+      "properties": {
+        "sourceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "sourceIds"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IUnpublishJobsExcludingSourceIdsRequest": {
+      "properties": {
+        "excludeSourceIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "excludeSourceIds"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IAPIJobType": {
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/TypeObjectIdIAPIJobType"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IGetJobTypeByNameRequest": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lang": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "lang"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IHtmlToTextRequest": {
+      "properties": {
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "html"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ISupportedLocaleRequest": {
+      "properties": {
+        "locale": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "locale"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IJobWage": {
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "perMonth": {
+          "type": "number",
+          "format": "double"
+        },
+        "wage": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "perMonth",
+        "wage"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IExtractWageRequest": {
+      "properties": {
+        "text": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "jobtype": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        },
+        "region": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IExtractEmailsRequest": {
+      "properties": {
+        "text": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IExtractJobTitleRequest": {
+      "properties": {
+        "text": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "pagetitle": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "linktext": {
+          "additionalProperties": true,
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "text",
+        "pagetitle"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IExtractLocationRequest": {
+      "properties": {
+        "text": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ICleanJobTitleRequest": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "region"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IHasPublicMailProviderRequest": {
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "additionalProperties": true
+    },
+    "IGeoCodeRequest": {
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "region": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "address"
+      ],
+      "type": "object",
+      "additionalProperties": true
     }
-  }
+  },
+  "info": {
+    "title": "@hokify/job-api",
+    "version": "v2.0.0",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "paths": {
+    "/application/test": {
+      "get": {
+        "operationId": "ApplicationGetTest",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/application/applyByWebForm": {
+      "post": {
+        "operationId": "ApplyByWebForm",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/deliverHokifyApplication": {
+      "post": {
+        "operationId": "DeliverHokifyApplication",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/deliverCustomHokifyApplication": {
+      "post": {
+        "operationId": "DeliverCustomHokifyApplication",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IDeliverCustomHokifyApplicationDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getHokifyApplication": {
+      "post": {
+        "operationId": "GetHokifyApplication",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/IAPIHokifyApplicationResult"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getApplicationEMail": {
+      "post": {
+        "operationId": "GetApplicationEMail",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getCustomQuestions": {
+      "post": {
+        "operationId": "GetCustomQuestions",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/IAPICustomQuestionResult"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getUserExtras": {
+      "post": {
+        "operationId": "GetUserExtras",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/IAPIUserExtraResult"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/generateApplicantPreviewFile": {
+      "post": {
+        "operationId": "GenerateApplicantPreviewFile",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/IMailAttachmentContent"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getUserImage": {
+      "post": {
+        "operationId": "GetUserImage",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/saveExternalApplicationId": {
+      "post": {
+        "operationId": "SaveExternalApplicationId",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdApplicationIdDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/addSendWarning": {
+      "post": {
+        "operationId": "AddSendWarning",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IMatchIdSendWarningDto"
+            }
+          }
+        ]
+      }
+    },
+    "/application/getApplications": {
+      "post": {
+        "operationId": "GetApplications",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/IAPIMatchWithUserAndRecruiterJob"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "application"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "operationId": "Token",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/AuthTokenResponse"
+            }
+          }
+        },
+        "tags": [
+          "authentication"
+        ],
+        "security": [
+          {
+            "JOB_API_BASIC": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/job/test": {
+      "get": {
+        "operationId": "JobGetTest",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/job/findOrCreateQuestion": {
+      "post": {
+        "operationId": "FindOrCreateQuestion",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/IAPIQuestion"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IFindOrCreateQuestionRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/createOrUpdateJob": {
+      "post": {
+        "operationId": "CreateOrUpdateJob",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ICreateOrUpdateJobRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/reportJobApiError": {
+      "post": {
+        "operationId": "ReportJobApiError",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IReportJobApiErrorRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/resolveJobApiError": {
+      "post": {
+        "operationId": "ResolveJobApiError",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IResolveJobApiErrorRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/unpublishJobsWithSourceIds": {
+      "post": {
+        "operationId": "UnpublishJobsWithSourceIds",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IUnpublishJobsWithSourceIdsRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/unpublishJobsExcludingSourceIds": {
+      "post": {
+        "operationId": "UnpublishJobsExcludingSourceIds",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IUnpublishJobsExcludingSourceIdsRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/job/getAllJobTypes": {
+      "post": {
+        "operationId": "GetAllJobTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/IAPIJobType"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/job/getJobTypeByName": {
+      "post": {
+        "operationId": "GetJobTypeByName",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "job"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IGetJobTypeByNameRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/htmlToText": {
+      "post": {
+        "operationId": "HtmlToText",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IHtmlToTextRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/supportedLocale": {
+      "post": {
+        "operationId": "SupportedLocale",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ISupportedLocaleRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/extractWage": {
+      "post": {
+        "operationId": "ExtractWage",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/IJobWage"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IExtractWageRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/extractEmails": {
+      "post": {
+        "operationId": "ExtractEmails",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IExtractEmailsRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/extractJobTitle": {
+      "post": {
+        "operationId": "ExtractJobTitle",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IExtractJobTitleRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/extractLocation": {
+      "post": {
+        "operationId": "ExtractLocation",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IExtractLocationRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/cleanJobTitle": {
+      "post": {
+        "operationId": "CleanJobTitle",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ICleanJobTitleRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/hasPublicMailProvider": {
+      "post": {
+        "operationId": "HasPublicMailProvider",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IHasPublicMailProviderRequest"
+            }
+          }
+        ]
+      }
+    },
+    "/helper/geocode": {
+      "post": {
+        "operationId": "Geocode",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/IAPILocation"
+            }
+          }
+        },
+        "tags": [
+          "helper"
+        ],
+        "security": [
+          {
+            "JOB_API_BEARER": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IGeoCodeRequest"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "securityDefinitions": {
+    "JOB_API_BASIC": {
+      "type": "basic"
+    },
+    "JOB_API_BEARER": {
+      "type": "oauth2",
+      "flow": "application",
+      "tokenUrl": "https://test.hokify.com/ats-api/v1/auth/token"
+    }
+  },
+  "host": "test.hokify.com",
+  "schemes": [
+    "https"
+  ]
 }
